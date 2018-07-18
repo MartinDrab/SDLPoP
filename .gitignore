@@ -1,6 +1,11 @@
 # PoP Hall of Fame file
 PRINCE.HOF
 
+bin
+tmp
+SDL/
+SDLImage/
+
 # PoP saved game file
 PRINCE.SAV
 QUICKSAVE.SAV
@@ -44,7 +49,6 @@ mods/*/
 *.i*86
 *.x86_64
 *.hex
-prince
 !data/PRINCE/
 
 # Debug files
