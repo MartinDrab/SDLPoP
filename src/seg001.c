@@ -779,14 +779,14 @@ void __pascal far hof_write() {
 	char custom_hof_path[POP_MAX_PATH];
 	const char* hof_path = get_hof_path(custom_hof_path, sizeof(custom_hof_path));
 	// no O_TRUNC
-	handle = open(hof_path, O_WRONLY | O_CREAT | O_BINARY, 0600);
+	handle = _open(hof_path, O_WRONLY | O_CREAT | O_BINARY, 0600);
 	if (handle < 0 ||
-	    write(handle, &hof_count, 2) != 2 ||
-	    write(handle, &hof, sizeof(hof)) != sizeof(hof) ||
-	    close(handle))
+	    _write(handle, &hof_count, 2) != 2 ||
+	    _write(handle, &hof, sizeof(hof)) != sizeof(hof) ||
+	    _close(handle))
 		perror(hof_path);
 	if (handle >= 0)
-		close(handle);
+		_close(handle);
 }
 
 // seg001:0F6C
@@ -795,15 +795,15 @@ void __pascal far hof_read() {
 	hof_count = 0;
 	char custom_hof_path[POP_MAX_PATH];
 	const char* hof_path = get_hof_path(custom_hof_path, sizeof(custom_hof_path));
-	handle = open(hof_path, O_RDONLY | O_BINARY);
+	handle = _open(hof_path, O_RDONLY | O_BINARY);
 	if (handle < 0)
 		return;
-	if (read(handle, &hof_count, 2) != 2 ||
-	    read(handle, &hof, sizeof(hof)) != sizeof(hof)) {
+	if (_read(handle, &hof_count, 2) != 2 ||
+	    _read(handle, &hof, sizeof(hof)) != sizeof(hof)) {
 		perror(hof_path);
 		hof_count = 0;
 	}
-	close(handle);
+	_close(handle);
 }
 
 // seg001:0FC3

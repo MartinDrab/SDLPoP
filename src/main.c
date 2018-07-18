@@ -18,12 +18,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 The authors of this program may be contacted at http://forum.princed.org
 */
 
+
+
+#define SDL_MAIN_HANDLED
 #include "common.h"
+
+
 
 int main(int argc, char *argv[])
 {
 	g_argc = argc;
 	g_argv = argv;
+
 	pop_main();
 	return 0;
 }

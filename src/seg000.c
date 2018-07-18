@@ -1833,11 +1833,11 @@ void __pascal far save_game() {
 	char custom_save_path[POP_MAX_PATH];
 	const char* save_path = get_save_path(custom_save_path, sizeof(custom_save_path));
 	// no O_TRUNC
-	handle = open(save_path, O_WRONLY | O_CREAT | O_BINARY, 0600);
+	handle = _open(save_path, O_WRONLY | O_CREAT | O_BINARY, 0600);
 	if (handle == -1) goto loc_1DB8;
-	if (write(handle, &rem_min, 2) == 2) goto loc_1DC9;
+	if (_write(handle, &rem_min, 2) == 2) goto loc_1DC9;
 	loc_1D9B:
-	close(handle);
+	_close(handle);
 	if (!success) {
 		unlink(save_path);
 	}
@@ -1846,9 +1846,9 @@ void __pascal far save_game() {
 	display_text_bottom("GAME SAVED");
 	goto loc_1E2E;
 	loc_1DC9:
-	if (write(handle, &rem_tick, 2) != 2) goto loc_1D9B;
-	if (write(handle, &current_level, 2) != 2) goto loc_1D9B;
-	if (write(handle, &hitp_beg_lev, 2) != 2) goto loc_1D9B;
+	if (_write(handle, &rem_tick, 2) != 2) goto loc_1D9B;
+	if (_write(handle, &current_level, 2) != 2) goto loc_1D9B;
+	if (_write(handle, &hitp_beg_lev, 2) != 2) goto loc_1D9B;
 	success = 1;
 	goto loc_1D9B;
 	loc_1E18:
@@ -1865,17 +1865,17 @@ short __pascal far load_game() {
 	success = 0;
 	char custom_save_path[POP_MAX_PATH];
 	const char* save_path = get_save_path(custom_save_path, sizeof(custom_save_path));
-	handle = open(save_path, O_RDONLY | O_BINARY);
+	handle = _open(save_path, O_RDONLY | O_BINARY);
 	if (handle == -1) goto loc_1E99;
-	if (read(handle, &rem_min, 2) == 2) goto loc_1E9E;
+	if (_read(handle, &rem_min, 2) == 2) goto loc_1E9E;
 	loc_1E8E:
-	close(handle);
+	_close(handle);
 	loc_1E99:
 	return success;
 	loc_1E9E:
-	if (read(handle, &rem_tick, 2) != 2) goto loc_1E8E;
-	if (read(handle, &start_level, 2) != 2) goto loc_1E8E;
-	if (read(handle, &hitp_beg_lev, 2) != 2) goto loc_1E8E;
+	if (_read(handle, &rem_tick, 2) != 2) goto loc_1E8E;
+	if (_read(handle, &start_level, 2) != 2) goto loc_1E8E;
+	if (_read(handle, &hitp_beg_lev, 2) != 2) goto loc_1E8E;
 #ifdef USE_COPYPROT
 	if (enable_copyprot && custom->copyprot_level > 0) {
 		custom->copyprot_level = start_level;

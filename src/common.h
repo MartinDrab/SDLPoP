@@ -37,11 +37,21 @@ extern "C" {
 #ifndef _MSC_VER // unistd.h does not exist in the Windows SDK.
 #include <unistd.h>
 #else
+#include <io.h>
+#include <direct.h>
+
 #ifndef _UNISTD_H
 #define _UNISTD_H    1
 #define F_OK    0       /* Test for existence.  */
 #define access _access
+
 #endif
+
+#define fileno(a)			_fileno(a)
+#define unlink(a)			_unlink(a)
+#define strdup(a)			_strdup(a)
+#define mkdir(a)			_mkdir(a)
+
 #endif
 
 // S_ISREG and S_ISDIR may not be defined under MSVC
@@ -66,6 +76,8 @@ extern "C" {
 #ifndef ABS
 #define ABS(x) ((x)<0?-(x):(x))
 #endif
+
+
 
 #ifdef __cplusplus
 }
